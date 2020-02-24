@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const ErrorMessage = () => {
+export const ErrorMessage = ({ name }) => {
     return (
-        <div>
-            hello
-        </div>
+        <div className="text-red-600 text-base">
+            Error Messge
+        </div >
     )
 }

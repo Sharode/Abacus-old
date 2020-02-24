@@ -1,9 +1,11 @@
 import React from 'react'
 
-export const Results = () => {
+export const Results = ({ values }) => {
+    console.log(values)
     return (
         <div>
-            congrats
+            {JSON.stringify(values, null, 3)}
         </div>
+
     )
 }

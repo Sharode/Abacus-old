@@ -1,19 +1,19 @@
 export const FIELDS = {
     property: [
         {
-            name: 'property.Address',
+            name: 'Address',
             label: 'Address',
             placeholder: '123 Cherry St',
             type: "text",
         },
         {
-            name: 'property.City',
+            name: 'City',
             label: 'City',
             placeholder: 'Austin',
             type: "text",
         },
         {
-            name: 'property.State',
+            name: 'State',
             label: 'State',
             placeholder: 'Texas',
             type: "text",
@@ -22,49 +22,49 @@ export const FIELDS = {
 
     financing: [
         {
-            name: 'financing.PurchasePrice',
-            label: 'Purchase Price',
+            name: 'PurchasePrice',
+            label: 'PurchasePrice',
             placeholder: '480000',
             type: "number",
         },
         {
-            name: 'financing.Amount',
-            label: 'Loan Amount',
+            name: 'Amount',
+            label: 'Amount',
             placeholder: '471306',
             type: "number",
         },
         {
-            name: 'financing.DownPaymentRate',
+            name: 'DownPaymentRate',
             label: 'Down payment (%)',
             placeholder: '3.5 %',
             type: "number",
         },
         {
-            name: 'financing.TermYears',
+            name: 'TermYears',
             label: 'Loan Term (yrs)',
             placeholder: '30',
             type: "number",
         },
         {
-            name: 'financing.InterestRate',
+            name: 'InterestRate',
             label: 'Interest rate',
             placeholder: '3.201 %',
             type: "number",
         },
         {
-            name: 'financing.MortgageInsurance',
+            name: 'MortgageInsurance',
             label: 'Mortgage Insurance',
             placeholder: '325$',
             type: "number",
         },
         {
-            name: 'financing.Points',
+            name: 'Points',
             label: 'Points added',
             placeholder: '0$',
             type: "number",
         },
         {
-            name: 'financing.ClosingCosts',
+            name: 'ClosingCosts',
             label: 'Closing costs',
             placeholder: '6256$',
             type: "number",
@@ -73,13 +73,13 @@ export const FIELDS = {
 
     repairs: [
         {
-            name: 'repairs.Amount',
+            name: 'Amount',
             label: 'Estimated repairs',
             placeholder: '41026.38$',
             type: "number",
         },
         {
-            name: 'repairs.Valuation',
+            name: 'Valuation',
             label: 'After repair value',
             placeholder: '480000$',
             type: "number",
@@ -88,13 +88,13 @@ export const FIELDS = {
 
     income: [
         {
-            name: 'income.Amount',
+            name: 'Amount',
             label: 'Income from units',
             placeholder: '3465$',
             type: "number",
         },
         {
-            name: 'income.Other',
+            name: 'Other',
             label: 'Other',
             placeholder: '0$',
             type: "number",
@@ -103,61 +103,61 @@ export const FIELDS = {
 
     expenses: [
         {
-            name: 'expenses.Vacancy',
+            name: 'Vacancy',
             label: 'Vacancy',
             placeholder: '0$',
             type: "number",
         },
         {
-            name: 'expenses.CapEx',
+            name: 'CapEx',
             label: 'Capital Expenditures',
             placeholder: '0$',
             type: "number",
         },
         {
-            name: 'expenses.Maintenance',
+            name: 'Maintenance',
             label: 'Repairs & Maintenance',
             placeholder: '0$',
             type: "number",
         },
         {
-            name: 'expenses.Management',
+            name: 'Management',
             label: 'Management fees',
             placeholder: '0$',
             type: "number",
         },
         {
-            name: 'expenses.Electricity',
+            name: 'Electricity',
             label: 'Electricity',
             placeholder: '0$',
             type: "number",
         },
         {
-            name: 'expenses.WaterSewer',
+            name: 'WaterSewer',
             label: 'Water & Sewer',
             placeholder: '0$',
             type: "number",
         },
         {
-            name: 'expenses.Trash',
+            name: 'Trash',
             label: 'Trash',
             placeholder: '0$',
             type: "number",
         },
         {
-            name: 'expenses.HOA',
+            name: 'HOA',
             label: 'HOA',
             placeholder: '0$',
             type: "number",
         },
         {
-            name: 'expenses.HomeInsurance',
+            name: 'HomeInsurance',
             label: 'Homeowners Insurance',
             placeholder: '130$',
             type: "number",
         },
         {
-            name: 'expenses.PropertyTaxes',
+            name: 'PropertyTaxes',
             label: 'Property Taxes',
             placeholder: '856$',
             type: "number",

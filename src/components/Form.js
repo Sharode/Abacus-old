@@ -1,58 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import { FIELDS } from '../constants/index'
 import { FormSection } from './FormSection'
 import { Results } from './Results'
-import { Continue, Back } from './Buttons'
+import { Continue, Back, Submit } from './Buttons'
+
 
 
 export const Form = () => {
 
-    const [state, setState] = useState({
-        property: {
-            Address: '',
-            City: '',
-            State: '',
-        },
-
-        financing: {
-            PurchasePrice: 0,
-            Amount: 0,
-            TermYears: 0,
-            DownPaymentRate: 0,
-            InterestRate: 0,
-            MortgageInsurance: 0,
-            Points: 0,
-            ClosingCosts: 0,
-        },
-
-        repairs: {
-            Amount: 0,
-            Valuation: 0,
-        },
-
-        income: {
-            Amount: 0,
-            Other: 0,
-        },
-
-        expenses: {
-            Vacancy: 0,
-            CapEx: 0,
-            Maintenance: 0,
-            Management: 0,
-            Electricity: 0,
-            WaterSewer: 0,
-            Trash: 0,
-            HOA: 0,
-            HomeInsurance: 0,
-            PropertyTaxes: 0,
-        }
+    const [property, setProperty] = useState({
+        Address: '',
+        City: '',
+        State: '',
     })
+    const [income, setIncome] = useState({
+        Amount: 0,
+        Other: 0,
+    })
+    const [repairs, setRepairs] = useState({
+        Amount: 0,
+        Valuation: 0,
+    })
+    const [expenses, setExpenses] = useState({
+        Vacancy: 0,
+        CapEx: 0,
+        Maintenance: 0,
+        Management: 0,
+        Electricity: 0,
+        WaterSewer: 0,
+        Trash: 0,
+        HOA: 0,
+        HomeInsurance: 0,
+        PropertyTaxes: 0,
+    })
+    const [financing, setFinancing] = useState({
+        PurchasePrice: 0,
+        Amount: 0,
+        TermYears: 0,
+        DownPaymentRate: 0,
+        InterestRate: 0,
+        MortgageInsurance: 0,
+        Points: 0,
+        ClosingCosts: 0,
+    })
+
     const [step, setStep] = useState(1)
+
+    const results = { income, repairs, financing, property, expenses }
 
 
     const nextStep = () => {
-        setStep(prev => prev + 1)
+        if (step <= 5) {
+            setStep(prev => prev + 1)
+        }
     }
 
     const previousStep = () => {
@@ -61,111 +61,68 @@ export const Form = () => {
         }
 
     }
-    // wrong syntax use (input ) => (E)
-    const handleChange = (input, e) => {
-        setState(prevState => {
-            return {
-                prevState,
-                [input]: e.target.value
-            }
-        })
+
+    const handleChange = (e, para) => {
+        e.preventDefault()
+        switch (para) {
+            case 'property':
+                setProperty({ ...property, [e.target.name]: e.target.value })
+                break
+            case 'income':
+                console.log(e.target.name)
+                setIncome({ ...income, [e.target.name]: e.target.value })
+                break
+            case 'repairs':
+                setRepairs({ ...repairs, [e.target.name]: e.target.value })
+                break
+            case 'expenses':
+                setExpenses({ ...expenses, [e.target.name]: e.target.value })
+                break
+            case 'financing':
+
+                setFinancing({ ...financing, [e.target.name]: e.target.value })
+                break
+        }
+
+
     }
 
-    switch (step) {
-        case 1:
-            return (
-                <div>
-                    <FormSection
-                        nextStep={nextStep}
-                        handleChange={handleChange}
-                        values={state.property}
-                        fields={FIELDS.property}
-                    />
-                    <div>
-                        <Back handleClick={previousStep} />
-                        <Continue handleClick={nextStep} />
-                    </div>
-
-                </div>
-
-            );
-        case 2:
-            return (
-                <div>
-                    <FormSection
-                        nextStep={nextStep}
-                        handleChange={handleChange}
-                        previousStep={previousStep}
-                        values={state.financing}
-                        fields={FIELDS.financing}
-                    />
-                    <div>
-                        <Back handleClick={previousStep} />
-                        <Continue handleClick={nextStep} />
-                    </div>
-                </div>
-
-            );
-        case 3:
-            return (
-                <div>
-                    <FormSection
-                        nextStep={nextStep}
-                        previousStep={previousStep}
-                        values={state.expenses}
-                        fields={FIELDS.expenses}
-
-                    />
-                    <div>
-                        <Back handleClick={previousStep} />
-                        <Continue handleClick={nextStep} />
-                    </div>
-                </div>
-            );
-
-        case 4:
-            return (
-                <div>
-                    <FormSection
-                        nextStep={nextStep}
-                        previousStep={previousStep}
-                        values={state.repairs}
-                        fields={FIELDS.repairs}
-
-                    />
-                    <div>
-                        <Back handleClick={previousStep} />
-                        <Continue handleClick={nextStep} />
-                    </div>
-                </div>
-            );
-        case 5:
-            return (
-                <div>
-                    <FormSection
-                        nextStep={nextStep}
-                        previousStep={previousStep}
-                        values={state.income}
-                        fields={FIELDS.income}
-                    />
-                    <div>
-                        <Back handleClick={previousStep} />
-                        <Continue handleClick={nextStep} />
-                    </div>
-                </div>
-            );
-        case 6:
-            return (
-                <Results
-                    values={state}
-                />
-            );
-        default:
+    const handleSubmit = (e) => {
+        setStep(6)
+        e.preventDefault()
+        console.log(results)
     }
+
+
+
+    const fieldVal = step === 1 ? 'property' : step === 2 ? 'financing' : step === 3 ? 'expenses' : step === 4 ? 'repairs' : step === 5 ? 'income' : null
 
     return (
-        <div>
+        <form onSubmit={(e) => handleSubmit(e)}>
+            {step === 6 ? null : (
+                <div>
+                    <FormSection
+                        nextStep={nextStep}
+                        previousStep={previousStep}
+                        handleChange={handleChange}
+                        values={results[fieldVal]}
+                        parameter={fieldVal}
+                        fields={FIELDS[fieldVal]}
+                    />
+                    <div>
+                        {step !== 1 && <Back handleClick={previousStep} />}
+                        {step <= 4 && <Continue handleClick={nextStep} />}
+                        {step === 5 && <Submit handleClick={handleSubmit} />}
 
-        </div>
+                    </div>
+                </div>)
+            }
+
+            {step !== 6 ? null :
+                <Results values={results} />
+            }
+
+        </form>
+
     )
 }
