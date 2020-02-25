@@ -1,0 +1,94 @@
+switch (step) {
+        case 1:
+            return (
+                <form>
+                    <FormSection
+                        nextStep={nextStep}
+                        previousStep={previousStep}
+                        handleChange={handleChange}
+                        values={property}
+                        parameter="property"
+                        fields={FIELDS.property}
+                    />
+                    <div className="flex justify-around">
+                        <Back handleClick={previousStep} />
+                        <Continue handleClick={nextStep} />
+                    </div>
+                </form>
+            );
+        case 2:
+            return (
+                <form>
+                    <FormSection
+                        nextStep={nextStep}
+                        handleChange={handleChange}
+                        previousStep={previousStep}
+                        values={financing}
+                        parameter="financing"
+                        fields={FIELDS.financing}
+                    />
+                    <div className="flex justify-around">
+                        <Back handleClick={previousStep} />
+                        <Continue handleClick={nextStep} />
+                    </div>
+                </form>
+
+            );
+        case 3:
+            return (
+                <div>
+                    <FormSection
+                        nextStep={nextStep}
+                        previousStep={previousStep}
+                        values={expenses}
+                        parameter="expenses"
+                        fields={FIELDS.expenses}
+                    />
+                    <div className="flex justify-around">
+                        <Back handleClick={previousStep} />
+                        <Continue handleClick={nextStep} />
+                    </div>
+                </div>
+            );
+
+        case 4:
+            return (
+                <div>
+                    <FormSection
+                        nextStep={nextStep}
+                        previousStep={previousStep}
+                        values={repairs}
+                        parameter="repairs"
+                        fields={FIELDS.repairs}
+
+                    />
+                    <div className="flex justify-around">
+                        <Back handleClick={previousStep} />
+                        <Continue handleClick={nextStep} />
+                    </div>
+                </div>
+            );
+        case 5:
+            return (
+                <div>
+                    <FormSection
+                        nextStep={nextStep}
+                        previousStep={previousStep}
+                        values={income}
+                        parameter="income"
+                        fields={FIELDS.income}
+                    />
+                    <div className="flex justify-around">
+                        <Back handleClick={previousStep} />
+                        <Continue handleClick={nextStep} />
+                    </div>
+                </div>
+            );
+        case 6:
+            return (
+                <Results
+                    values={results}
+                />
+            );
+        default:
+    }

@@ -1,8 +1,11 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState } from 'react'
 import { FIELDS } from '../constants/index'
 import { FormSection } from './FormSection'
 import { Results } from './Results'
 import { Continue, Back, Submit } from './Buttons'
+import { NavForm } from './NavForm'
+
+import { CashFlow } from '../helpers/Calculations'
 
 
 
@@ -48,7 +51,6 @@ export const Form = () => {
 
     const results = { income, repairs, financing, property, expenses }
 
-
     const nextStep = () => {
         if (step <= 5) {
             setStep(prev => prev + 1)
@@ -59,7 +61,6 @@ export const Form = () => {
         if (step !== 1) {
             setStep(prev => prev - 1)
         }
-
     }
 
     const handleChange = (e, para) => {
@@ -69,7 +70,6 @@ export const Form = () => {
                 setProperty({ ...property, [e.target.name]: e.target.value })
                 break
             case 'income':
-                console.log(e.target.name)
                 setIncome({ ...income, [e.target.name]: e.target.value })
                 break
             case 'repairs':
@@ -79,50 +79,63 @@ export const Form = () => {
                 setExpenses({ ...expenses, [e.target.name]: e.target.value })
                 break
             case 'financing':
-
                 setFinancing({ ...financing, [e.target.name]: e.target.value })
                 break
+            default:
+                throw new Error()
         }
-
-
     }
 
     const handleSubmit = (e) => {
-        setStep(6)
         e.preventDefault()
-        console.log(results)
+        setStep(6)
+        const fifty = CashFlow(income)
+        console.log(fifty)
     }
 
-
+    const NavClick = (e) => {
+        const { id } = e.target
+        // eslint-disable-next-line
+        if (step == id) return null
+        setStep(parseInt(id))
+    }
 
     const fieldVal = step === 1 ? 'property' : step === 2 ? 'financing' : step === 3 ? 'expenses' : step === 4 ? 'repairs' : step === 5 ? 'income' : null
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <div>
+
             {step === 6 ? null : (
                 <div>
-                    <FormSection
-                        nextStep={nextStep}
-                        previousStep={previousStep}
-                        handleChange={handleChange}
-                        values={results[fieldVal]}
-                        parameter={fieldVal}
-                        fields={FIELDS[fieldVal]}
-                    />
-                    <div>
-                        {step !== 1 && <Back handleClick={previousStep} />}
-                        {step <= 4 && <Continue handleClick={nextStep} />}
-                        {step === 5 && <Submit handleClick={handleSubmit} />}
+                    <NavForm handleClick={NavClick} />
+                    <form onSubmit={(e) => handleSubmit(e)}>
 
-                    </div>
+                        <div>
+                            <FormSection
+                                nextStep={nextStep}
+                                previousStep={previousStep}
+                                handleChange={handleChange}
+                                values={results[fieldVal]}
+                                parameter={fieldVal}
+                                fields={FIELDS[fieldVal]}
+                            />
+                            <div className="flex justify-around">
+                                {step !== 1 && <Back handleClick={previousStep} />}
+                                {step <= 4 && <Continue handleClick={nextStep} />}
+                                {step === 5 && <Submit handleClick={handleSubmit} />}
+
+                            </div>
+                        </div>
+                    </form>
                 </div>)
             }
-
             {step !== 6 ? null :
                 <Results values={results} />
             }
-
-        </form>
+        </div>
 
     )
 }
+
+
+
