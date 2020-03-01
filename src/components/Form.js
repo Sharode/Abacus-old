@@ -5,8 +5,7 @@ import { Results } from './Results'
 import { Continue, Back, Submit } from './Buttons'
 import { NavForm } from './NavForm'
 
-import { CashFlow } from '../helpers/Calculations'
-
+import { summationCalc, CashOnCash } from '../calculations'
 
 
 export const Form = () => {
@@ -47,6 +46,8 @@ export const Form = () => {
         ClosingCosts: 0,
     })
 
+    const [finalCalc, setFinalCalc] = useState({})
+
     const [step, setStep] = useState(1)
 
     const results = { income, repairs, financing, property, expenses }
@@ -86,11 +87,46 @@ export const Form = () => {
         }
     }
 
+    const runCalculations = () => {
+
+        const totalCashNeeded = summationCalc(repairs.Amount, financing.PurchasePrice, financing.ClosingCosts)
+        const { Vacancy,
+            CapEx,
+            Maintenance,
+            Management,
+            Electricity,
+            WaterSewer,
+            Trash,
+            HOA,
+            HomeInsurance,
+            PropertyTaxes } = expenses
+        const AnnualExpenses = summationCalc(Vacancy, CapEx,
+            Maintenance,
+            Management,
+            Electricity,
+            WaterSewer,
+            Trash,
+            HOA,
+            HomeInsurance,
+            PropertyTaxes) * 12
+        const AnnualIncome = summationCalc(income.Amount, income.Other) * 12
+
+        const NetOperatingIncome = AnnualIncome - AnnualExpenses
+
+
+        const CashOnCashReturn = CashOnCash(NetOperatingIncome, totalCashNeeded)
+        // const totalCashNeeded = summationCalc(repairs.Amount, financing.PurchasePrice, financing.ClosingCosts)
+        // const totalCashNeeded = summationCalc(repairs.Amount, financing.PurchasePrice, financing.ClosingCosts)u
+
+        const calcs = { NetOperatingIncome, AnnualExpenses, AnnualIncome, CashOnCashReturn }
+        setFinalCalc(calcs)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
+        runCalculations()
         setStep(6)
-        const fifty = CashFlow(income)
-        console.log(fifty)
+
     }
 
     const NavClick = (e) => {
@@ -104,7 +140,6 @@ export const Form = () => {
 
     return (
         <div>
-
             {step === 6 ? null : (
                 <div>
                     <NavForm handleClick={NavClick} />
@@ -130,7 +165,7 @@ export const Form = () => {
                 </div>)
             }
             {step !== 6 ? null :
-                <Results values={results} />
+                <Results values={results} calculations={finalCalc} />
             }
         </div>
 
