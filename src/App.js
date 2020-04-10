@@ -1,4 +1,5 @@
 import React from 'react';
+import Form from './components/Form';
 
 function App() {
 	return (
@@ -9,6 +10,7 @@ function App() {
 					Learn React
 				</a>
 			</header>
+			<Form />
 		</div>
 	);
 }
