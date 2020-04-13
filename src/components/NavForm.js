@@ -13,31 +13,31 @@ export const NavForm = ({ handleClick }) => {
                     <button
                         id="1"
                         onClick={(e) => handleClick(e)}
-                        className={BtnClass} href="#">Property</button>
+                        className={BtnClass}>Property</button>
                 </li>
                 <li className="mr-1">
                     <button
                         id="2"
                         onClick={(e) => handleClick(e)}
-                        className={BtnClass} href="#">Financing</button>
+                        className={BtnClass}>Financing</button>
                 </li>
                 <li className="mr-1">
                     <button
                         id="3"
                         onClick={(e) => handleClick(e)}
-                        className={BtnClass} href="#">Expenses</button>
+                        className={BtnClass}>Expenses</button>
                 </li>
                 <li className="mr-1">
                     <button
                         id="4"
                         onClick={(e) => handleClick(e)}
-                        className={BtnClass} href="#">Repairs</button>
+                        className={BtnClass}>Repairs</button>
                 </li>
                 <li className="mr-1">
                     <button
                         id="5"
                         onClick={(e) => handleClick(e)}
-                        className={BtnClass} href="#">Income</button>
+                        className={BtnClass}>Income</button>
                 </li>
             </ul>
         </nav>

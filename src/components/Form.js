@@ -4,11 +4,14 @@ import { FormSection } from './FormSection'
 import { Results } from './Results'
 import { Continue, Back, Submit } from './Buttons'
 import { NavForm } from './NavForm'
+import { useSetBuyAndHoldResultsContext } from '../context'
 
 import { summationCalc, CashOnCash } from '../calculations'
 
 
 export const Form = () => {
+
+    const setResults = useSetBuyAndHoldResultsContext()
 
     const [property, setProperty] = useState({
         Address: '',
@@ -46,11 +49,9 @@ export const Form = () => {
         ClosingCosts: 0,
     })
 
-    const [finalCalc, setFinalCalc] = useState({})
-
     const [step, setStep] = useState(1)
 
-    const results = { income, repairs, financing, property, expenses }
+    const formDetails = { income, repairs, financing, property, expenses }
 
     const nextStep = () => {
         if (step <= 5) {
@@ -64,9 +65,9 @@ export const Form = () => {
         }
     }
 
-    const handleChange = (e, para) => {
+    const handleChange = (e, parameter) => {
         e.preventDefault()
-        switch (para) {
+        switch (parameter) {
             case 'property':
                 setProperty({ ...property, [e.target.name]: e.target.value })
                 break
@@ -90,36 +91,25 @@ export const Form = () => {
     const runCalculations = () => {
 
         const totalCashNeeded = summationCalc(repairs.Amount, financing.PurchasePrice, financing.ClosingCosts)
-        const { Vacancy,
-            CapEx,
-            Maintenance,
-            Management,
-            Electricity,
-            WaterSewer,
-            Trash,
-            HOA,
-            HomeInsurance,
-            PropertyTaxes } = expenses
-        const AnnualExpenses = summationCalc(Vacancy, CapEx,
-            Maintenance,
-            Management,
-            Electricity,
-            WaterSewer,
-            Trash,
-            HOA,
-            HomeInsurance,
-            PropertyTaxes) * 12
-        const AnnualIncome = summationCalc(income.Amount, income.Other) * 12
 
+        const { Vacancy, CapEx, Maintenance, Management, Electricity, WaterSewer, Trash, HOA, HomeInsurance, PropertyTaxes } = expenses
+
+        const monthlyExpenses = summationCalc(Vacancy, CapEx, Maintenance, Management, Electricity, WaterSewer, Trash, HOA, HomeInsurance, PropertyTaxes)
+
+        const AnnualExpenses = monthlyExpenses * 12
+
+        const monthlyIncome = summationCalc(income.Amount, income.Other)
+
+        const AnnualIncome = monthlyIncome * 12
+
+        const monthlyCashFlow = monthlyIncome - monthlyExpenses
         const NetOperatingIncome = AnnualIncome - AnnualExpenses
 
-
         const CashOnCashReturn = CashOnCash(NetOperatingIncome, totalCashNeeded)
-        // const totalCashNeeded = summationCalc(repairs.Amount, financing.PurchasePrice, financing.ClosingCosts)
-        // const totalCashNeeded = summationCalc(repairs.Amount, financing.PurchasePrice, financing.ClosingCosts)u
 
-        const calcs = { NetOperatingIncome, AnnualExpenses, AnnualIncome, CashOnCashReturn }
-        setFinalCalc(calcs)
+        const calculations = { NetOperatingIncome, AnnualExpenses, AnnualIncome, CashOnCashReturn, monthlyCashFlow, monthlyExpenses, monthlyIncome, totalCashNeeded }
+
+        setResults({ formDetails, calculations })
     }
 
     const handleSubmit = (e) => {
@@ -150,7 +140,7 @@ export const Form = () => {
                                 nextStep={nextStep}
                                 previousStep={previousStep}
                                 handleChange={handleChange}
-                                values={results[fieldVal]}
+                                values={formDetails[fieldVal]}
                                 parameter={fieldVal}
                                 fields={FIELDS[fieldVal]}
                             />
@@ -165,7 +155,7 @@ export const Form = () => {
                 </div>)
             }
             {step !== 6 ? null :
-                <Results values={results} calculations={finalCalc} />
+                <Results />
             }
         </div>
 

@@ -1,10 +1,9 @@
 import React from 'react'
-import { ErrorMessage } from './ErrorMessage'
+// import { ErrorMessage } from './ErrorMessage'
 
 export const FormSection = ({ values, fields, handleChange, parameter, step }) => {
     return (
         <div className="mb-6">
-            {/* <div className="w-full mb-8 pb-2 border-gray-300 border-b-2">Field name</div> */}
             <div className="min-h-24 bg-white shadow-md rounded px-8 py-6 sm:px-16 sm:py-12">
                 {fields.map((obj) => {
                     const { name } = obj

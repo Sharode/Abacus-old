@@ -1,6 +1,7 @@
 import React from 'react';
 import './tailwind.css'
 import { Form } from './components/Form'
+import { Controller } from './context'
 function App() {
   return (
 
@@ -9,9 +10,10 @@ function App() {
         <h1 className="font-bold text-3xl">Abacus</h1>
         <div>Fast, Free Rental Property Analysis</div>
       </div>
+      <Controller>
+        <Form />
 
-      <Form />
-
+      </Controller>
     </div>
   );
 }
